@@ -13,6 +13,18 @@ const USERS_KEY = 'cake_manager_users';
 const AUTH_KEY = 'cake_manager_auth';
 
 export const authUtils = {
+  // Initialize admin account if not exists
+  initializeAdmin(): void {
+    const users = this.getUsers();
+    const adminExists = users.some(user => user.email === 'ofyou');
+    
+    if (!adminExists) {
+      users.push({ email: 'ofyou', password: 'qkrrk1212!' });
+      this.saveUsers(users);
+      console.log('어드민 계정이 자동으로 생성되었습니다: ofyou');
+    }
+  },
+
   // Get all users from localStorage
   getUsers(): User[] {
     const users = localStorage.getItem(USERS_KEY);

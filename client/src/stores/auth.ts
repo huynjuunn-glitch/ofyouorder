@@ -38,6 +38,9 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   checkAuth: () => {
+    // 어드민 계정 초기화
+    authUtils.initializeAdmin();
+    
     const isAuth = authUtils.isAuthenticated();
     const email = authUtils.getCurrentUserEmail();
     set({ isAuthenticated: isAuth, userEmail: email });
