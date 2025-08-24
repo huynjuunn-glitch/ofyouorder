@@ -112,6 +112,16 @@
 /* Custom styles for react-day-picker */
 .rdp {
   margin: 0;
+  width: 100%;
+}
+
+.rdp-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.rdp-cell {
+  text-align: center;
 }
 
 .rdp-cell .rdp-button {
