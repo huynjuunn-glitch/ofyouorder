@@ -1,0 +1,184 @@
+목표
+“케이크 매니저”라는 이름의 웹앱을 제작한다.
+
+목적: Google Sheets에 정리된 주문 내역을 클라이언트에서 직접 불러와 날짜별로 관리.
+
+배포: Vercel (서버 없는 정적 빌드), Root directory = client/
+
+보안: 개인 사용 목적, API Key 클라이언트 저장 허용.
+
+언어: 한국어 UI (모든 버튼/라벨/표기).
+
+1. 프로젝트 구조
+client/              # Root directory (Vercel에 연결)
+  app/               # Next.js App Router
+    layout.tsx
+    page.tsx         # 로그인/회원가입
+    dashboard/page.tsx
+  components/        # UI 컴포넌트
+  lib/               # 유틸 (auth, sheets 등)
+  styles/            # Tailwind CSS
+  public/            # 정적 파일
+
+2. 기술 스택
+
+Next.js 14 (App Router, Pages 없음)
+
+TypeScript
+
+Tailwind CSS (JIT, 기본 색상 팔레트)
+
+shadcn/ui (Button, Card, Dialog, Input, Table, Progress 등)
+
+lucide-react (아이콘)
+
+react-day-picker (날짜/기간 선택)
+
+zustand (전역 상태, 필요 시)
+
+3. 동작 방식
+
+사용자 접속 → 로그인/회원가입 화면 (/)
+
+localStorage 기반 인증(이메일/비번 저장 후 토큰 발급)
+
+로그인 성공 시 /dashboard로 이동
+
+대시보드(dashboard/)에서
+
+상단 헤더: 🎂 케이크 매니저 + 사용자 표시 + “설정” 버튼
+
+캘린더 카드: 날짜/기간 선택 + “주문 조회” 버튼
+
+주문 내역 테이블: 고객명 검색 + 주문경로 필터
+
+통계 카드: 디자인/맛/사이즈/시트/크림별 개수 + Progress bar
+
+설정 버튼 → Dialog 열기
+
+Google Sheets API Key, Sheet ID, Sheet Name 입력
+
+localStorage에 저장
+
+저장 후 데이터 요청 가능
+
+4. Google Sheets 연동
+
+요청 URL
+
+https://sheets.googleapis.com/v4/spreadsheets/{SHEET_ID}/values/{SHEET_NAME}!A1:K2000?key={API_KEY}
+
+
+컬럼 구조 (A~K 열)
+
+이름 | 디자인 | 주문일자 | 픽업일자 | 맛선택 | 시트 | 사이즈 | 크림 | 요청사항 | 특이사항 | 주문경로
+
+
+첫 행은 헤더, 2행부터 데이터.
+
+날짜 포맷: YYYY.MM.DD 또는 YYYY-MM-DD → 모두 파싱 지원.
+
+“픽업일자” 기준으로 필터링.
+
+5. UI 상세 요구사항
+5.1 헤더
+
+좌측: 🎂 케이크 매니저 (텍스트)
+
+우측: 현재 사용자 이메일 + “설정” 버튼 + “로그아웃” 메뉴
+
+5.2 캘린더 카드
+
+달력에서 기간 선택 가능(react-day-picker Range mode)
+
+우측에 선택된 기간 요약 박스 (2025.08.01 - 2025.08.29 / 총 29일)
+
+“주문 조회” 버튼 → Google Sheets 요청
+
+5.3 주문 내역 테이블
+
+상단 좌측: 고객명 검색 (부분 일치, 대소문자 무시)
+
+상단 우측: 주문경로 필터 (자동으로 고유값 목록 + “모두”)
+
+테이블 컬럼:
+
+고객명 | 디자인 | 주문일자 | 픽업일자 | 맛/시트/사이즈 | 요청사항 | 특이사항
+
+스크롤 지원, 하단 총 건수 표시
+
+5.4 통계 카드
+
+5종: 디자인 / 맛선택 / 사이즈 / 시트 / 크림
+
+항목별 개수 집계 후 내림차순 상위 10개
+
+Progress bar: 해당 카드 내 최댓값을 100%로 normalize
+
+우측에 “항목명 — N개”
+
+6. 인증 (데모용)
+
+회원가입 시: localStorage에 users: [{email, password}] 저장
+
+로그인 시: 검증 후 authToken + currentUserEmail 저장
+
+보호 라우트: /dashboard 접근 시 토큰 없으면 /로 리다이렉트
+
+로그아웃: 토큰 제거 → / 이동
+
+7. 에러/로딩 처리
+
+설정값(API Key, Sheet ID, Sheet Name)이 없으면 설정 다이얼로그 자동 오픈
+
+데이터 로딩 중 스피너 표시
+
+요청 실패 시 토스트:
+
+“시트를 ‘링크가 있는 모든 사용자’로 공유했는지, API Key/Sheet ID/Sheet Name을 확인하세요.”
+
+8. Vercel 배포 고려사항
+
+서버 코드 없음 → Google Sheets API 직접 호출
+
+Root directory = client
+
+vercel.json 예시:
+
+{
+  "builds": [{ "src": "client/package.json", "use": "@vercel/next" }],
+  "routes": [{ "src": "/(.*)", "dest": "client/$1" }]
+}
+
+
+모든 설정(localStorage 기반) → 환경변수 불필요
+
+9. 파일/코드 유틸
+
+lib/sheets.ts
+
+fetchSheetData(apiKey, sheetId, sheetName)
+
+parseDate(str) : YYYY.MM.DD / YYYY-MM-DD 둘 다 처리
+
+filterByDate(rows, start, end)
+
+lib/group.ts
+
+countBy(rows, key)
+
+정렬 및 상위 10개 반환
+
+10. 완성 체크리스트
+
+로그인/회원가입 → 대시보드 이동 정상 동작
+
+설정 저장 후 “주문 조회” 가능
+
+날짜/기간 필터링 정상 작동
+
+검색/필터 정상 동작
+
+통계 카드 상위 10개 표시 정상 동작
+
+Vercel에서 client/ 루트로 빌드 및 배포 가능
