@@ -3,11 +3,11 @@ import { Progress } from '@/components/ui/progress';
 import { useOrdersStore } from '@/stores/orders';
 
 const STAT_COLORS = {
-  디자인: 'text-pink-500',
-  맛선택: 'text-orange-500',
-  사이즈: 'text-green-500',
-  시트: 'text-purple-500',
-  크림: 'text-yellow-500',
+  디자인: 'text-pink-700 font-bold',
+  맛선택: 'text-orange-700 font-bold',
+  사이즈: 'text-green-700 font-bold',
+  시트: 'text-purple-700 font-bold',
+  크림: 'text-yellow-700 font-bold',
 };
 
 const STAT_ICONS = {
@@ -19,11 +19,19 @@ const STAT_ICONS = {
 };
 
 const PROGRESS_COLORS = {
-  디자인: 'bg-pink-500',
-  맛선택: 'bg-orange-500',
-  사이즈: 'bg-green-500',
-  시트: 'bg-purple-500',
-  크림: 'bg-yellow-500',
+  디자인: 'bg-gradient-to-r from-pink-500 to-pink-600',
+  맛선택: 'bg-gradient-to-r from-orange-500 to-orange-600',
+  사이즈: 'bg-gradient-to-r from-green-500 to-green-600',
+  시트: 'bg-gradient-to-r from-purple-500 to-purple-600',
+  크림: 'bg-gradient-to-r from-yellow-500 to-yellow-600',
+};
+
+const CARD_COLORS = {
+  디자인: 'border-pink-300 bg-gradient-to-br from-pink-50 to-pink-100',
+  맛선택: 'border-orange-300 bg-gradient-to-br from-orange-50 to-orange-100',
+  사이즈: 'border-green-300 bg-gradient-to-br from-green-50 to-green-100',
+  시트: 'border-purple-300 bg-gradient-to-br from-purple-50 to-purple-100',
+  크림: 'border-yellow-300 bg-gradient-to-br from-yellow-50 to-yellow-100',
 };
 
 export default function StatisticsCards() {
@@ -54,10 +62,10 @@ export default function StatisticsCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
       {Object.entries(statistics).map(([category, items]) => (
-        <Card key={category} data-testid={`card-stat-${category}`}>
+        <Card key={category} data-testid={`card-stat-${category}`} className={`border-2 shadow-lg ${CARD_COLORS[category as keyof typeof CARD_COLORS]}`}>
           <CardHeader>
-            <CardTitle className={`flex items-center ${STAT_COLORS[category as keyof typeof STAT_COLORS]}`}>
-              <span className="mr-2">{STAT_ICONS[category as keyof typeof STAT_ICONS]}</span>
+            <CardTitle className={`flex items-center text-lg ${STAT_COLORS[category as keyof typeof STAT_COLORS]}`}>
+              <span className="mr-2 text-2xl">{STAT_ICONS[category as keyof typeof STAT_ICONS]}</span>
               {category}별 통계
             </CardTitle>
           </CardHeader>
@@ -70,13 +78,13 @@ export default function StatisticsCards() {
               <div className="space-y-3">
                 {items.map((item: any, index: number) => (
                   <div key={index} data-testid={`stat-item-${category}-${index}`}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-gray-700">{item.name}</span>
-                      <span className="text-sm font-medium text-gray-900">{item.count}개</span>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-semibold text-gray-800">{item.name}</span>
+                      <span className="text-sm font-bold text-gray-900 bg-white px-2 py-1 rounded-full shadow-sm">{item.count}개</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="w-full bg-gray-300 rounded-full h-3 shadow-inner">
                       <div 
-                        className={`h-2 rounded-full transition-all duration-500 ${PROGRESS_COLORS[category as keyof typeof PROGRESS_COLORS]}`}
+                        className={`h-3 rounded-full transition-all duration-500 shadow-sm ${PROGRESS_COLORS[category as keyof typeof PROGRESS_COLORS]}`}
                         style={{ width: `${item.percentage}%` }}
                       />
                     </div>

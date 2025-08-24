@@ -71,16 +71,16 @@ export default function CalendarCard() {
   };
 
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>
+    <Card className="mb-8 border-2 border-pink-200 shadow-lg">
+      <CardHeader className="bg-gradient-to-r from-pink-50 to-rose-50">
+        <CardTitle className="text-xl font-bold text-pink-700">
           📅 조회 기간 선택
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+            <div className="border-2 border-pink-300 rounded-lg p-4 bg-pink-50">
               <DayPicker
                 mode="range"
                 selected={selectedRange}
@@ -91,11 +91,11 @@ export default function CalendarCard() {
             </div>
           </div>
           <div className="space-y-4">
-            <Card className="bg-gray-50">
+            <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200">
               <CardContent className="pt-4">
-                <h3 className="font-medium text-gray-900 mb-2">선택된 기간</h3>
-                <div className="text-sm text-gray-600">
-                  <p data-testid="text-selected-range" className="font-medium text-primary-600">
+                <h3 className="font-bold text-blue-800 mb-2 text-lg">선택된 기간</h3>
+                <div className="text-sm text-blue-700">
+                  <p data-testid="text-selected-range" className="font-bold text-lg text-blue-900">
                     {formatDateRange()}
                   </p>
                 </div>
@@ -103,11 +103,11 @@ export default function CalendarCard() {
             </Card>
             <Button 
               onClick={handleFetchOrders} 
-              className="w-full"
+              className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 text-lg shadow-lg"
               disabled={isLoading}
               data-testid="button-fetch-orders"
             >
-              <Search className="w-4 h-4 mr-2" />
+              <Search className="w-5 h-5 mr-2" />
               {isLoading ? '조회 중...' : '주문 조회'}
             </Button>
           </div>
