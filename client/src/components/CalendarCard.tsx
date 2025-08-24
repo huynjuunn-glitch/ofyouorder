@@ -79,6 +79,17 @@ export default function CalendarCard() {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+              <DayPicker
+                mode="range"
+                selected={selectedRange}
+                onSelect={handleRangeSelect}
+                data-testid="calendar-date-picker"
+                className="w-full"
+              />
+            </div>
+          </div>
           <div className="space-y-4">
             <Card className="bg-gray-50">
               <CardContent className="pt-4">
@@ -99,17 +110,6 @@ export default function CalendarCard() {
               <Search className="w-4 h-4 mr-2" />
               {isLoading ? '조회 중...' : '주문 조회'}
             </Button>
-          </div>
-          <div className="lg:col-span-2">
-            <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
-              <DayPicker
-                mode="range"
-                selected={selectedRange}
-                onSelect={handleRangeSelect}
-                data-testid="calendar-date-picker"
-                className="w-full"
-              />
-            </div>
           </div>
         </div>
       </CardContent>
