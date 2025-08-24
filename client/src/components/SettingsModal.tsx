@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Info } from 'lucide-react';
+import { Info } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -55,16 +55,8 @@ export default function SettingsModal() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="max-w-md" data-testid="modal-settings">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
+          <DialogTitle>
             Google Sheets 설정
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsOpen(false)}
-              data-testid="button-close-settings"
-            >
-              <X className="w-5 h-5" />
-            </Button>
           </DialogTitle>
         </DialogHeader>
         
@@ -75,11 +67,9 @@ export default function SettingsModal() {
               id="apiKey"
               placeholder="Google Sheets API Key를 입력하세요"
               data-testid="input-api-key"
+              className="bg-gray-100 border-gray-300 placeholder:opacity-50"
               {...form.register('apiKey')}
             />
-            <p className="text-xs text-gray-500 mt-1">
-              Google Cloud Console에서 발급받은 API Key
-            </p>
             {form.formState.errors.apiKey && (
               <p className="text-sm text-red-600 mt-1">
                 {form.formState.errors.apiKey.message}
@@ -93,11 +83,9 @@ export default function SettingsModal() {
               id="sheetId"
               placeholder="Google Sheets ID를 입력하세요"
               data-testid="input-sheet-id"
+              className="bg-gray-100 border-gray-300 placeholder:opacity-50"
               {...form.register('sheetId')}
             />
-            <p className="text-xs text-gray-500 mt-1">
-              스프레드시트 URL에서 추출한 ID
-            </p>
             {form.formState.errors.sheetId && (
               <p className="text-sm text-red-600 mt-1">
                 {form.formState.errors.sheetId.message}
@@ -111,11 +99,9 @@ export default function SettingsModal() {
               id="sheetName"
               placeholder="시트 이름을 입력하세요"
               data-testid="input-sheet-name"
+              className="bg-gray-100 border-gray-300 placeholder:opacity-50"
               {...form.register('sheetName')}
             />
-            <p className="text-xs text-gray-500 mt-1">
-              데이터가 있는 시트 탭 이름
-            </p>
             {form.formState.errors.sheetName && (
               <p className="text-sm text-red-600 mt-1">
                 {form.formState.errors.sheetName.message}
