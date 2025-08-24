@@ -3,11 +3,11 @@ import { Progress } from '@/components/ui/progress';
 import { useOrdersStore } from '@/stores/orders';
 
 const STAT_COLORS = {
-  디자인: 'text-gray-800 font-medium',
-  맛선택: 'text-gray-800 font-medium',
-  사이즈: 'text-gray-800 font-medium',
-  시트: 'text-gray-800 font-medium',
-  크림: 'text-gray-800 font-medium',
+  디자인: 'text-rose-800 font-medium',
+  맛선택: 'text-amber-800 font-medium',
+  사이즈: 'text-teal-800 font-medium',
+  시트: 'text-violet-800 font-medium',
+  크림: 'text-pink-800 font-medium',
 };
 
 const STAT_ICONS = {
@@ -19,11 +19,19 @@ const STAT_ICONS = {
 };
 
 const PROGRESS_COLORS = {
-  디자인: 'bg-gray-700',
-  맛선택: 'bg-gray-700',
-  사이즈: 'bg-gray-700',
-  시트: 'bg-gray-700',
-  크림: 'bg-gray-700',
+  디자인: 'bg-rose-500',
+  맛선택: 'bg-amber-500',
+  사이즈: 'bg-teal-500',
+  시트: 'bg-violet-500',
+  크림: 'bg-pink-500',
+};
+
+const CARD_COLORS = {
+  디자인: 'border-rose-200 bg-rose-50',
+  맛선택: 'border-amber-200 bg-amber-50',
+  사이즈: 'border-teal-200 bg-teal-50',
+  시트: 'border-violet-200 bg-violet-50',
+  크림: 'border-pink-200 bg-pink-50',
 };
 
 export default function StatisticsCards() {
@@ -54,7 +62,7 @@ export default function StatisticsCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
       {Object.entries(statistics).map(([category, items]) => (
-        <Card key={category} data-testid={`card-stat-${category}`} className="border border-gray-200">
+        <Card key={category} data-testid={`card-stat-${category}`} className={`shadow-sm ${CARD_COLORS[category as keyof typeof CARD_COLORS]}`}>
           <CardHeader>
             <CardTitle className={`flex items-center ${STAT_COLORS[category as keyof typeof STAT_COLORS]}`}>
               <span className="mr-2">{STAT_ICONS[category as keyof typeof STAT_ICONS]}</span>
@@ -72,7 +80,7 @@ export default function StatisticsCards() {
                   <div key={index} data-testid={`stat-item-${category}-${index}`}>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm text-gray-700">{item.name}</span>
-                      <span className="text-sm font-medium text-gray-900">{item.count}개</span>
+                      <span className="text-sm font-medium text-gray-800">{item.count}개</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div 

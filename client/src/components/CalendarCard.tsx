@@ -71,16 +71,16 @@ export default function CalendarCard() {
   };
 
   return (
-    <Card className="mb-8 border border-gray-200">
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold text-gray-900">
+    <Card className="mb-8 border border-blue-200 shadow-sm">
+      <CardHeader className="bg-blue-50">
+        <CardTitle className="text-lg font-semibold text-blue-800">
           📅 조회 기간 선택
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+            <div className="border border-blue-200 rounded-lg p-4 bg-blue-50">
               <DayPicker
                 mode="range"
                 selected={selectedRange}
@@ -91,11 +91,11 @@ export default function CalendarCard() {
             </div>
           </div>
           <div className="space-y-4">
-            <Card className="bg-gray-50 border border-gray-200">
+            <Card className="bg-indigo-50 border border-indigo-200">
               <CardContent className="pt-4">
-                <h3 className="font-semibold text-gray-800 mb-2">선택된 기간</h3>
-                <div className="text-sm text-gray-700">
-                  <p data-testid="text-selected-range" className="font-medium text-gray-900">
+                <h3 className="font-semibold text-indigo-800 mb-2">선택된 기간</h3>
+                <div className="text-sm text-indigo-700">
+                  <p data-testid="text-selected-range" className="font-medium text-indigo-900">
                     {formatDateRange()}
                   </p>
                 </div>
@@ -103,7 +103,7 @@ export default function CalendarCard() {
             </Card>
             <Button 
               onClick={handleFetchOrders} 
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium"
+              className="w-full bg-slate-600 hover:bg-slate-700 text-white font-medium"
               disabled={isLoading}
               data-testid="button-fetch-orders"
             >

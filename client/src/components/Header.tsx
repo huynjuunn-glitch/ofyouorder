@@ -20,15 +20,15 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
+    <header className="bg-slate-700 shadow-lg border-b border-slate-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-3">
             <span className="text-2xl">🎂</span>
-            <h1 className="text-xl font-bold text-gray-900">케이크 매니저</h1>
+            <h1 className="text-xl font-bold text-white">케이크 매니저</h1>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-sm font-medium text-gray-600" data-testid="text-user-email">
+            <span className="text-sm font-medium text-slate-200" data-testid="text-user-email">
               {userEmail}
             </span>
             <Button
@@ -36,7 +36,7 @@ export default function Header() {
               size="sm"
               onClick={handleSettings}
               data-testid="button-settings"
-              className="flex items-center space-x-1 text-gray-700 hover:bg-gray-100"
+              className="flex items-center space-x-1 text-slate-200 hover:bg-slate-600"
             >
               <Settings className="w-4 h-4" />
               <span>설정</span>
@@ -46,7 +46,7 @@ export default function Header() {
               size="sm"
               onClick={handleLogout}
               data-testid="button-logout"
-              className="flex items-center space-x-1 text-gray-700 hover:bg-gray-100"
+              className="flex items-center space-x-1 text-slate-200 hover:bg-slate-600"
             >
               <LogOut className="w-4 h-4" />
               <span>로그아웃</span>
