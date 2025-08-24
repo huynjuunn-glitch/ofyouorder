@@ -37,23 +37,23 @@ export default function OrdersTable() {
   const uniqueOrderSources = sheetsUtils.getUniqueOrderSources(orders);
 
   return (
-    <Card className="mb-8 border-2 border-orange-200 shadow-lg">
-      <CardHeader className="bg-gradient-to-r from-orange-50 to-amber-50">
+    <Card className="mb-8 border border-gray-200">
+      <CardHeader>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-          <CardTitle className="text-xl font-bold text-orange-700">📋 주문 내역</CardTitle>
+          <CardTitle className="text-lg font-semibold text-gray-900">📋 주문 내역</CardTitle>
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 placeholder="고객명 검색"
                 value={customerSearch}
                 onChange={(e) => setCustomerSearch(e.target.value)}
                 data-testid="input-customer-search"
-                className="pl-10 w-full sm:w-48 border-2 border-orange-300 focus:border-orange-500 font-medium"
+                className="pl-10 w-full sm:w-48 border border-gray-300 focus:border-gray-500"
               />
             </div>
             <Select value={orderSource} onValueChange={setOrderSource}>
-              <SelectTrigger className="w-full sm:w-40 border-2 border-orange-300 focus:border-orange-500 font-medium" data-testid="select-order-source">
+              <SelectTrigger className="w-full sm:w-40 border border-gray-300 focus:border-gray-500" data-testid="select-order-source">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -72,14 +72,14 @@ export default function OrdersTable() {
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="bg-gradient-to-r from-orange-100 to-amber-100 border-b-2 border-orange-300">
-                <TableHead className="font-bold text-orange-800">고객명</TableHead>
-                <TableHead className="font-bold text-orange-800">디자인</TableHead>
-                <TableHead className="font-bold text-orange-800">주문일자</TableHead>
-                <TableHead className="font-bold text-orange-800">픽업일자</TableHead>
-                <TableHead className="font-bold text-orange-800">맛/시트/사이즈</TableHead>
-                <TableHead className="font-bold text-orange-800">요청사항</TableHead>
-                <TableHead className="font-bold text-orange-800">특이사항</TableHead>
+              <TableRow className="bg-gray-50 border-b border-gray-200">
+                <TableHead className="font-medium text-gray-900">고객명</TableHead>
+                <TableHead className="font-medium text-gray-900">디자인</TableHead>
+                <TableHead className="font-medium text-gray-900">주문일자</TableHead>
+                <TableHead className="font-medium text-gray-900">픽업일자</TableHead>
+                <TableHead className="font-medium text-gray-900">맛/시트/사이즈</TableHead>
+                <TableHead className="font-medium text-gray-900">요청사항</TableHead>
+                <TableHead className="font-medium text-gray-900">특이사항</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -91,12 +91,12 @@ export default function OrdersTable() {
                 </TableRow>
               ) : (
                 filteredOrders.map((order, index) => (
-                  <TableRow key={index} data-testid={`row-order-${index}`} className="hover:bg-orange-50">
-                    <TableCell className="font-bold text-gray-800">{order.이름}</TableCell>
-                    <TableCell className="font-semibold text-pink-600">{order.디자인}</TableCell>
-                    <TableCell className="font-medium text-blue-600">{order.주문일자}</TableCell>
-                    <TableCell className="font-medium text-green-600">{order.픽업일자}</TableCell>
-                    <TableCell className="font-medium text-purple-600">
+                  <TableRow key={index} data-testid={`row-order-${index}`} className="hover:bg-gray-50">
+                    <TableCell className="font-medium text-gray-900">{order.이름}</TableCell>
+                    <TableCell className="text-gray-700">{order.디자인}</TableCell>
+                    <TableCell className="text-gray-700">{order.주문일자}</TableCell>
+                    <TableCell className="text-gray-700">{order.픽업일자}</TableCell>
+                    <TableCell className="text-gray-700">
                       {`${order.맛선택}/${order.시트}/${order.사이즈}`}
                     </TableCell>
                     <TableCell className="max-w-xs truncate text-gray-600">
@@ -111,9 +111,9 @@ export default function OrdersTable() {
             </TableBody>
           </Table>
         </div>
-        <div className="px-6 py-3 bg-gradient-to-r from-orange-100 to-amber-100 border-t-2 border-orange-300 mt-4 rounded-b-lg">
-          <p className="text-base font-bold text-orange-800" data-testid="text-total-orders">
-            총 <span className="font-black text-xl text-orange-900">{filteredOrders.length}개</span>의 주문
+        <div className="px-6 py-3 bg-gray-50 border-t border-gray-200 mt-4 rounded-b-lg">
+          <p className="text-sm font-medium text-gray-700" data-testid="text-total-orders">
+            총 <span className="font-semibold text-gray-900">{filteredOrders.length}개</span>의 주문
           </p>
         </div>
       </CardContent>
