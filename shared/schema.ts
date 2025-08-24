@@ -19,7 +19,14 @@ export type Order = z.infer<typeof orderSchema>;
 
 // Authentication schemas
 export const loginSchema = z.object({
-  email: z.string().email("올바른 이메일을 입력하세요"),
+  email: z.string().refine((email) => {
+    // 관리자 계정은 이메일 형식 검증 건너뛰기
+    if (email === 'ofyou') {
+      return true;
+    }
+    // 다른 계정은 이메일 형식 검증
+    return z.string().email().safeParse(email).success;
+  }, "올바른 이메일을 입력하세요"),
   password: z.string().min(1, "비밀번호를 입력하세요"),
 });
 

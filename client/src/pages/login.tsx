@@ -73,11 +73,11 @@ export default function Login() {
             {!isSignup ? (
               <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
                 <div>
-                  <Label htmlFor="email">이메일</Label>
+                  <Label htmlFor="email">아이디/이메일</Label>
                   <Input
                     id="email"
-                    type="email"
-                    placeholder="이메일을 입력하세요"
+                    type="text"
+                    placeholder="아이디 또는 이메일을 입력하세요"
                     data-testid="input-email"
                     {...loginForm.register('email')}
                   />
