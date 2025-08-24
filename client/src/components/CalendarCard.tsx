@@ -59,8 +59,9 @@ export default function CalendarCard() {
     const start = formatDate(selectedRange.from);
     const end = selectedRange.to ? formatDate(selectedRange.to) : start;
     
+    // 하루만 선택해도 시작날짜와 종료날짜 모두 표시
     if (start === end) {
-      return `${start} (1일)`;
+      return `${start} - ${end} (총 1일)`;
     }
     
     const diffTime = Math.abs(selectedRange.to!.getTime() - selectedRange.from.getTime());
