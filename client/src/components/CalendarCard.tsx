@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { DayPicker, DateRange } from 'react-day-picker';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -73,9 +73,8 @@ export default function CalendarCard() {
   return (
     <Card className="mb-8">
       <CardHeader>
-        <CardTitle className="flex items-center space-x-2">
-          <Calendar className="w-5 h-5" />
-          <span>📅 조회 기간 선택</span>
+        <CardTitle>
+          📅 조회 기간 선택
         </CardTitle>
       </CardHeader>
       <CardContent>
