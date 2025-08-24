@@ -63,8 +63,18 @@ export const sheetsUtils = {
       const pickupDate = this.parseDate(order.픽업일자);
       if (!pickupDate) return false;
       
-      if (startDate && pickupDate < startDate) return false;
-      if (endDate && pickupDate > endDate) return false;
+      // 날짜만 비교하기 위해 시간을 00:00:00으로 설정
+      const pickupDateOnly = new Date(pickupDate.getFullYear(), pickupDate.getMonth(), pickupDate.getDate());
+      
+      if (startDate) {
+        const startDateOnly = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        if (pickupDateOnly < startDateOnly) return false;
+      }
+      
+      if (endDate) {
+        const endDateOnly = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+        if (pickupDateOnly > endDateOnly) return false;
+      }
       
       return true;
     });

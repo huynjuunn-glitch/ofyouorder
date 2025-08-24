@@ -86,7 +86,7 @@ export default function CalendarCard() {
                 selected={selectedRange}
                 onSelect={handleRangeSelect}
                 data-testid="calendar-date-picker"
-                className="mx-auto"
+                className="w-full"
               />
             </div>
           </div>
