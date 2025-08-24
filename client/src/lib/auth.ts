@@ -22,6 +22,29 @@ export const authUtils = {
       users.push({ email: 'ofyou', password: 'qkrrk1212!' });
       this.saveUsers(users);
       console.log('어드민 계정이 자동으로 생성되었습니다: ofyou');
+    } else {
+      // 기존 어드민 계정이 있는지 확인하고 비밀번호가 맞는지 체크
+      const adminUser = users.find(user => user.email === 'ofyou');
+      if (adminUser && adminUser.password !== 'qkrrk1212!') {
+        // 비밀번호가 다르면 업데이트
+        adminUser.password = 'qkrrk1212!';
+        this.saveUsers(users);
+        console.log('어드민 계정 비밀번호가 업데이트되었습니다.');
+      }
+    }
+    
+    // 강제로 어드민 계정 재생성 (디버깅용)
+    const currentUsers = this.getUsers();
+    const hasCorrectAdmin = currentUsers.some(user => 
+      user.email === 'ofyou' && user.password === 'qkrrk1212!'
+    );
+    
+    if (!hasCorrectAdmin) {
+      // 기존 ofyou 계정 제거하고 새로 생성
+      const filteredUsers = currentUsers.filter(user => user.email !== 'ofyou');
+      filteredUsers.push({ email: 'ofyou', password: 'qkrrk1212!' });
+      this.saveUsers(filteredUsers);
+      console.log('어드민 계정이 강제로 재생성되었습니다.');
     }
   },
 
