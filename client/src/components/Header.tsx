@@ -23,12 +23,12 @@ export default function Header() {
     <header className="bg-slate-700 shadow-lg border-b border-slate-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-3">
-            <span className="text-2xl">🎂</span>
-            <h1 className="text-xl font-bold text-white">케이크 매니저</h1>
+          <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+            <span className="text-xl sm:text-2xl">🎂</span>
+            <h1 className="text-base sm:text-xl font-bold text-white truncate">케이크 매니저</h1>
           </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-sm font-medium text-slate-200" data-testid="text-user-email">
+          <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+            <span className="text-xs sm:text-sm font-medium text-slate-200 truncate max-w-[100px] sm:max-w-none" data-testid="text-user-email">
               {userEmail}
             </span>
             <Button
@@ -39,7 +39,7 @@ export default function Header() {
               className="flex items-center space-x-1 text-slate-200 hover:bg-slate-600"
             >
               <Settings className="w-4 h-4" />
-              <span>설정</span>
+              <span className="hidden sm:inline">설정</span>
             </Button>
             <Button
               variant="ghost"
@@ -49,7 +49,7 @@ export default function Header() {
               className="flex items-center space-x-1 text-slate-200 hover:bg-slate-600"
             >
               <LogOut className="w-4 h-4" />
-              <span>로그아웃</span>
+              <span className="hidden sm:inline">로그아웃</span>
             </Button>
           </div>
         </div>

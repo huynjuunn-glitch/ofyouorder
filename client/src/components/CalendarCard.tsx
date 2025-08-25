@@ -80,14 +80,16 @@ export default function CalendarCard() {
       <CardContent>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <div className="border border-blue-200 rounded-lg p-4 bg-blue-50">
-              <DayPicker
-                mode="range"
-                selected={selectedRange}
-                onSelect={handleRangeSelect}
-                data-testid="calendar-date-picker"
-                className="w-full"
-              />
+            <div className="border border-blue-200 rounded-lg p-2 sm:p-4 bg-blue-50 overflow-hidden">
+              <div className="overflow-x-auto overflow-y-hidden">
+                <DayPicker
+                  mode="range"
+                  selected={selectedRange}
+                  onSelect={handleRangeSelect}
+                  data-testid="calendar-date-picker"
+                  className="w-full min-w-[280px]"
+                />
+              </div>
             </div>
           </div>
           <div className="space-y-4">
