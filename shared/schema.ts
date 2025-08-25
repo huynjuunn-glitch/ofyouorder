@@ -13,6 +13,7 @@ export const orderSchema = z.object({
   요청사항: z.string().optional(),
   특이사항: z.string().optional(),
   주문경로: z.string(),
+  연락처: z.string().optional(),
 });
 
 export type Order = z.infer<typeof orderSchema>;
