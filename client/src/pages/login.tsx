@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useLocation } from 'wouter';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,47 +7,30 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useAuthStore } from '@/stores/auth';
-import { loginSchema, signupSchema, type LoginData, type SignupData } from '@shared/schema';
+import { loginSchema, type LoginData } from '@shared/schema';
 
 export default function Login() {
   const [, setLocation] = useLocation();
-  const [isSignup, setIsSignup] = useState(false);
   const { toast } = useToast();
-  const { login, signup } = useAuthStore();
+  const { login } = useAuthStore();
 
   const loginForm = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' }
   });
 
-  const signupForm = useForm<SignupData>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: { email: '', password: '', confirmPassword: '' }
-  });
-
   const handleLogin = (data: LoginData) => {
     const success = login(data.email, data.password);
     if (success) {
-      toast({ title: '로그인 성공', description: '대시보드로 이동합니다.' });
+      toast({ 
+        title: '로그인 성공', 
+        description: '구글 시트 연결 정보가 자동으로 설정되었습니다.' 
+      });
       setLocation('/dashboard');
     } else {
       toast({ 
         title: '로그인 실패', 
-        description: '이메일 또는 비밀번호가 올바르지 않습니다.',
-        variant: 'destructive'
-      });
-    }
-  };
-
-  const handleSignup = (data: SignupData) => {
-    const success = signup(data.email, data.password);
-    if (success) {
-      toast({ title: '회원가입 성공', description: '대시보드로 이동합니다.' });
-      setLocation('/dashboard');
-    } else {
-      toast({ 
-        title: '회원가입 실패', 
-        description: '이미 존재하는 이메일입니다.',
+        description: '아이디 또는 비밀번호가 올바르지 않습니다.',
         variant: 'destructive'
       });
     }
@@ -65,121 +47,45 @@ export default function Login() {
         
         <Card className="shadow-lg">
           <CardHeader>
-            <h2 className="text-xl font-semibold text-gray-900">
-              {isSignup ? '회원가입' : '로그인'}
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-900">로그인</h2>
+            <p className="text-sm text-gray-600">개인 전용 케이크 관리 시스템</p>
           </CardHeader>
           <CardContent>
-            {!isSignup ? (
-              <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
-                <div>
-                  <Label htmlFor="email">아이디/이메일</Label>
-                  <Input
-                    id="email"
-                    type="text"
-                    placeholder="아이디 또는 이메일을 입력하세요"
-                    data-testid="input-email"
-                    {...loginForm.register('email')}
-                  />
-                  {loginForm.formState.errors.email && (
-                    <p className="text-sm text-red-600 mt-1">
-                      {loginForm.formState.errors.email.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <Label htmlFor="password">비밀번호</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="비밀번호를 입력하세요"
-                    data-testid="input-password"
-                    {...loginForm.register('password')}
-                  />
-                  {loginForm.formState.errors.password && (
-                    <p className="text-sm text-red-600 mt-1">
-                      {loginForm.formState.errors.password.message}
-                    </p>
-                  )}
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  data-testid="button-login"
-                  disabled={loginForm.formState.isSubmitting}
-                >
-                  로그인
-                </Button>
-              </form>
-            ) : (
-              <form onSubmit={signupForm.handleSubmit(handleSignup)} className="space-y-4">
-                <div>
-                  <Label htmlFor="signup-email">이메일</Label>
-                  <Input
-                    id="signup-email"
-                    type="email"
-                    placeholder="이메일을 입력하세요"
-                    data-testid="input-signup-email"
-                    {...signupForm.register('email')}
-                  />
-                  {signupForm.formState.errors.email && (
-                    <p className="text-sm text-red-600 mt-1">
-                      {signupForm.formState.errors.email.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <Label htmlFor="signup-password">비밀번호</Label>
-                  <Input
-                    id="signup-password"
-                    type="password"
-                    placeholder="비밀번호를 입력하세요"
-                    data-testid="input-signup-password"
-                    {...signupForm.register('password')}
-                  />
-                  {signupForm.formState.errors.password && (
-                    <p className="text-sm text-red-600 mt-1">
-                      {signupForm.formState.errors.password.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <Label htmlFor="confirm-password">비밀번호 확인</Label>
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    placeholder="비밀번호를 다시 입력하세요"
-                    data-testid="input-confirm-password"
-                    {...signupForm.register('confirmPassword')}
-                  />
-                  {signupForm.formState.errors.confirmPassword && (
-                    <p className="text-sm text-red-600 mt-1">
-                      {signupForm.formState.errors.confirmPassword.message}
-                    </p>
-                  )}
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  data-testid="button-signup"
-                  disabled={signupForm.formState.isSubmitting}
-                >
-                  회원가입
-                </Button>
-              </form>
-            )}
-            
-            <div className="mt-4 text-center">
-              <Button
-                variant="ghost"
-                onClick={() => setIsSignup(!isSignup)}
-                data-testid="button-toggle-auth"
-              >
-                {isSignup 
-                  ? '이미 계정이 있으신가요? 로그인' 
-                  : '계정이 없으신가요? 회원가입'}
+            <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
+              <div>
+                <Label htmlFor="email">아이디</Label>
+                <Input
+                  id="email"
+                  type="text"
+                  {...loginForm.register('email')}
+                  className="mt-1"
+                  placeholder="아이디를 입력하세요"
+                />
+                {loginForm.formState.errors.email && (
+                  <p className="text-sm text-red-600 mt-1">
+                    {loginForm.formState.errors.email.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Label htmlFor="password">비밀번호</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  {...loginForm.register('password')}
+                  className="mt-1"
+                  placeholder="비밀번호를 입력하세요"
+                />
+                {loginForm.formState.errors.password && (
+                  <p className="text-sm text-red-600 mt-1">
+                    {loginForm.formState.errors.password.message}
+                  </p>
+                )}
+              </div>
+              <Button type="submit" className="w-full">
+                로그인
               </Button>
-            </div>
+            </form>
           </CardContent>
         </Card>
       </div>

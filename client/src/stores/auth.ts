@@ -5,7 +5,6 @@ interface AuthState {
   isAuthenticated: boolean;
   userEmail: string | null;
   login: (email: string, password: string) => boolean;
-  signup: (email: string, password: string) => boolean;
   logout: () => void;
   checkAuth: () => void;
 }
@@ -22,15 +21,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     return success;
   },
 
-  signup: (email: string, password: string) => {
-    const success = authUtils.register(email, password);
-    if (success) {
-      // Auto-login after successful signup
-      authUtils.login(email, password);
-      set({ isAuthenticated: true, userEmail: email });
-    }
-    return success;
-  },
 
   logout: () => {
     authUtils.logout();
