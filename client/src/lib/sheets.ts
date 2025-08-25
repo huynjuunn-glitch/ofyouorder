@@ -7,7 +7,7 @@ export interface GoogleSheetsResponse {
 export const sheetsUtils = {
   // Fetch data from Google Sheets
   async fetchSheetData(apiKey: string, sheetId: string, sheetName: string): Promise<Order[]> {
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A1:K2000?key=${apiKey}`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}!A1:L2000?key=${apiKey}`;
     
     try {
       const response = await fetch(url);
@@ -35,6 +35,7 @@ export const sheetsUtils = {
         요청사항: row[8] || '',
         특이사항: row[9] || '',
         주문경로: row[10] || '',
+        연락처: row[11] || '',
       }));
       
       return orders;
